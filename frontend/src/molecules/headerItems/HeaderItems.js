@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import HeaderItem from "../../atoms/headerItem/HeaderItem";
+import "./Style.css";
 
 const HeaderItems = () => {
   const [Items, setItems] = useState([
@@ -16,8 +17,8 @@ const HeaderItems = () => {
 
   return (
     <div className="headerItems__container">
-      {Items.forEach((Item) => {
-        return <HeaderItem link={Item.link} title={Item.title} />;
+      {Items.map((item, i) => {
+        return <HeaderItem key={i} link={item.link} title={item.title} />;
       })}
     </div>
   );

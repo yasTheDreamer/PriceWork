@@ -1,0 +1,17 @@
+#factor__button {
+  height: 2.2em;
+  width: 15%;
+  margin-top: 10px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #698dac;
+  box-shadow: 5px 5px 20px black;
+  color: white;
+  font-weight: 700;
+  font-size: 0.9em;
+}
+
+#factor__button:active {
+  box-shadow: none;
+}

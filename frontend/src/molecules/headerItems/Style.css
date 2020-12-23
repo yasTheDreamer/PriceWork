@@ -1,0 +1,12 @@
+.headerItems__container {
+  display: flex;
+  width: 100%;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  padding-left: 8em;
+  padding-top: 1em;
+  z-index: 2;
+}

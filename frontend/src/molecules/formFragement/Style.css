@@ -1,0 +1,9 @@
+.form__fragement__container {
+  display: flex;
+  flex-direction: column;
+  padding: 2em;
+}
+
+.stats__container {
+  margin-bottom: 20px;
+}

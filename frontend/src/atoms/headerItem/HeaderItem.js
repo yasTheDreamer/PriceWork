@@ -1,11 +1,12 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
+import "./Style.css";
 const HeaderItem = (props) => {
   return (
     <div className="header__item__container">
-      <a href={props.link}>
-        <h1>{props.headline}</h1>
-      </a>
+      <Link to={props.link} className="header__item__container--link">
+        <h2 className="header__item__container--headline">{props.title}</h2>
+      </Link>
     </div>
   );
 };

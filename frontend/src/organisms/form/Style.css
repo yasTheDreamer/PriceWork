@@ -1,0 +1,43 @@
+.form__container {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: calc(100% - 50px);
+  top: 50px;
+  left: 0;
+  z-index: 3;
+}
+
+.main__form {
+  text-align: left;
+  background: rgba(255, 255, 255, 0.4);
+  height: 90%;
+  width: 40%;
+}
+
+.main__form--form {
+  padding-right: 2em;
+  padding-left: 2em;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+}
+
+.formFragement__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2em;
+}
+.control__buttons {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#factor__button[type="button"] {
+  width: 10em;
+}

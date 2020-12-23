@@ -1,0 +1,23 @@
+#factor {
+  width: 75%;
+  height: 2.5em;
+  border: none;
+  text-indent: 10px;
+  margin-top: 10px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.factorInput__container {
+  display: flex;
+}
