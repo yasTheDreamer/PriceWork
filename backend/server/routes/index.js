@@ -3,7 +3,9 @@ var router = express.Router();
 
 /* GET home page. */
 router.get("/", (req, res, next) => {
-  console.log("on home page");
+  // console.log("on home page");
+  // console.log(req.sessionID);
+  // res.send("done");
 });
 
 router.post("/", (req, res, next) => {

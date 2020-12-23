@@ -1,30 +1,28 @@
 import createError from "http-errors";
 import express from "express";
+import session from "express-session";
 import path from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 
 import indexRouter from "./routes/index";
 import usersRouter from "./routes/users";
-import User from "./models/User";
-import UserServiceImpl from "./services/UserServiceImpl";
-
-let user = new User()
-  .withJobTitle("Full Stack Developer")
-  .withSalary(3000)
-  .build();
-
-let service = new UserServiceImpl();
-service.saveUser(user);
 
 var app = express();
+
+let sess = {
+  secret: "price work",
+  resave: false,
+  saveUninitialized: true,
+  cookie: { sameSite: "none" },
+};
 
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "../public")));
-
+app.use(session(sess));
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 
