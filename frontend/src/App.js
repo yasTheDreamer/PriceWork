@@ -1,9 +1,9 @@
 import "./App.css";
 import { Route, Switch } from "react-router-dom";
 
-import Background from "./atoms/background/Background";
-import Header from "./organisms/header/Header";
-import Form from "./organisms/form/Form";
+import Background from "./components/atoms/background/Background";
+import Header from "./components/organisms/header/Header";
+import Form from "./components/organisms/form/Form";
 
 function App() {
   return (

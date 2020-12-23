@@ -1,5 +1,5 @@
 import React from "react";
-import background from "../../assets/img/background.jpg";
+import background from "../../../assets/img/background.jpg";
 import BackgroundLayer from "./BackgroundLayer";
 import "./Style.css";
 
