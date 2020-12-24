@@ -1,5 +1,5 @@
 import UserRepository from "./UserRepository";
-import User from "../db/UserSchema";
+import { writeUserData } from "../db/UserSchema";
 
 class UserRepositoryImpl extends UserRepository {
   constructor() {
@@ -7,14 +7,8 @@ class UserRepositoryImpl extends UserRepository {
   }
 
   update(user) {
-    const userToUpdate = new User(user);
-    console.log(userToUpdate);
-    if (userToUpdate) {
-      userToUpdate.save((err, res) => {
-        if (err) console.log("error is : " + err);
-        else console.log(res);
-      });
-    }
+    const userToUpdate = writeUserData(user);
+    console.log(userToUpdate.key);
   }
 }
 

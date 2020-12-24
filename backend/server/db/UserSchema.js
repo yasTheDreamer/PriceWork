@@ -1,17 +1,21 @@
-import mongoose from "mongoose";
+import firebase from "./dbConnection";
 
-const Schema = mongoose.Schema;
+const usersRef = firebase.database().ref("users");
 
-const UserSchema = new Schema({
-  _id: { type: Schema.Types.ObjectId, required: true },
-  salary: { type: Number, required: false },
-  jobTitle: { type: String, required: false },
-  zipCode: { type: Number, required: false },
-  experience: { type: Number, required: false },
-  email: { type: String, required: false },
-  timeStamp: { type: String, required: true },
-  socialLogin1: { type: String, required: false },
-  socialLogin2: { type: String, required: false },
-});
-
-export default mongoose.model("User", UserSchema);
+export const writeUserData = (user) => {
+  const userId = usersRef.push({
+    salary: user.salary,
+    jobTitle: user.jobTitle,
+    address: {
+      country: user.address.country,
+      state: user.address.state,
+      zipCode: user.address.zipCode,
+    },
+    experience: user.experience,
+    email: user.email,
+    timeStamp: user.timeStamp,
+    socialLogin1: user.socialLogin1,
+    socialLogin2: user.socialLogin2,
+  });
+  return userId;
+};
