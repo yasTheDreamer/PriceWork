@@ -1,6 +1,8 @@
-import firebase from "./dbConnection";
+import admin from "./dbConnection";
 
-const usersRef = firebase.database().ref("users");
+const usersRef = admin.database().ref("users");
+
+console.log(usersRef);
 
 export const writeUserData = (user) => {
   const userId = usersRef.push({

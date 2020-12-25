@@ -1,9 +1,11 @@
 import { firebaseConfig } from "../config/dbConfig";
-import firebase from "firebase/app";
-import "firebase/database";
-import "firebase/auth";
+import admin from "firebase-admin";
 
-firebase.initializeApp(firebaseConfig);
+//firebase.initializeApp(firebaseConfig);
+
+admin.initializeApp(firebaseConfig);
 
 // database setup
-export default firebase;
+//export default firebase;
+
+export default admin;

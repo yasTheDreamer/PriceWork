@@ -8,21 +8,6 @@ import logger from "morgan";
 import indexRouter from "./routes/index";
 import usersRouter from "./routes/users";
 
-//testing the firebase database insert
-import UserServiceImpl from "./services/UserServiceImpl";
-import User from "./models/User";
-
-let user = new User()
-  .withSalary(2000)
-  .withJobTitle("Project Manager")
-  .withCountry("USA")
-  .withZipCode(9000)
-  .withState("CA")
-  .build();
-
-let service = new UserServiceImpl();
-service.saveUser(user);
-
 var app = express();
 
 let sess = {
