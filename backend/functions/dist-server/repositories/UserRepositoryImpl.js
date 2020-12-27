@@ -48,7 +48,23 @@ var UserRepositoryImpl = /*#__PURE__*/function (_UserRepository) {
     key: "update",
     value: function update(user) {
       var userToUpdate = (0, _UserSchema.writeUserData)(user);
-      console.log(userToUpdate.key);
+      return userToUpdate.key;
+    }
+  }, {
+    key: "findAll",
+    value: function findAll(res) {
+      (0, _UserSchema.readData)(res);
+    }
+  }, {
+    key: "exists",
+    value: function exists(key) {
+      return (0, _UserSchema.recordExists)(key);
+    }
+  }, {
+    key: "updateRecord",
+    value: function updateRecord(key, data) {
+      var updatedRecord = (0, _UserSchema.updateRecord)(key, data);
+      return updatedRecord;
     }
   }]);
 

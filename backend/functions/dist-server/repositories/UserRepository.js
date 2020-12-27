@@ -11,10 +11,10 @@ var UserRepository = function UserRepository() {
   _classCallCheck(this, UserRepository);
 
   if ((this instanceof UserRepository ? this.constructor : void 0) === UserRepository) throw new TypeError("Cannot instantiate interface UserRepository");
-  if (this.update === undefined) throw new Error("Have to implement update method"); // if (this.delete === undefined)
-  //   throw new Error("Have to implement delete method");
-  // if (this.findAll === undefined)
-  //   throw new Error("Have to implement findAll method");
+  if (this.update === undefined) throw new Error("Have to implement update method");
+  if (this.findAll === undefined) throw new Error("Have to implement findAll method");
+  if (this.exists === undefined) throw new Error("Have to implement exists method");
+  if (this.updateRecord === undefined) throw new Error("Have to implement updateRecord method");
 };
 
 var _default = UserRepository;

@@ -11,10 +11,37 @@ class UserServiceImpl extends UserService {
     if (user && typeof user === "object") {
       try {
         const UserRepository = new UserRepositoryImpl();
-        UserRepository.update(user);
+        return UserRepository.update(user);
       } catch (err) {
         console.log("user may be undefined or not well structured" + err);
       }
+    }
+  }
+
+  getAllData(res) {
+    try {
+      const UserRepository = new UserRepositoryImpl();
+      UserRepository.findAll(res);
+    } catch (err) {
+      console.log("cannot fetch data from the database" + err);
+    }
+  }
+
+  recordExists(key) {
+    try {
+      const UserRepository = new UserRepositoryImpl();
+      return UserRepository.exists(key);
+    } catch (err) {
+      console.log("error checking if the record exist" + err);
+    }
+  }
+
+  updateRecord(key, data) {
+    try {
+      const UserRepository = new UserRepositoryImpl();
+      return UserRepository.updateRecord(key, data);
+    } catch (err) {
+      console.log("couldn't update record" + err);
     }
   }
 }

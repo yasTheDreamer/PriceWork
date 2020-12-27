@@ -2,29 +2,39 @@ import createError from "http-errors";
 import express from "express";
 import session from "express-session";
 import path from "path";
-import cookieParser from "cookie-parser";
 import logger from "morgan";
+import cors from "cors";
+const FirebaseStore = require("connect-session-firebase")(session);
 
 import indexRouter from "./routes/index";
-import usersRouter from "./routes/users";
+import { ref } from "./db/dbConnection";
 
 var app = express();
 
 let sess = {
+  name: "__session",
+  store: new FirebaseStore({
+    database: ref.database(),
+  }),
   secret: "price work",
-  resave: false,
-  saveUninitialized: true,
-  cookie: { sameSite: "none" },
+  resave: true,
+  saveUninitialized: false,
+  cookie: { sameSite: "none", secure: false, httpOnly: false, maxAge: 900000 },
 };
 
+app.use(cors({ origin: true, credentials: true }));
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "../public")));
 app.use(session(sess));
+
+app.use(express.static(path.join(__dirname, "../public")));
+app.use((req, res, next) => {
+  res.header("Cache-Control", "private");
+  next();
+});
+
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -39,7 +49,7 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render("error");
+  res.render(err.message);
 });
 
 module.exports = app;

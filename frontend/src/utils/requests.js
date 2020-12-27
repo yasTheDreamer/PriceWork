@@ -1,10 +1,8 @@
-export const fetchData = (url, body = undefined) => {
-  let result = null;
-
+export const fetchData = (url, body = null) => {
   if (url) {
     console.log(url);
-    if (body == undefined) {
-      fetch(url, {
+    if (body == null) {
+      return fetch(url, {
         method: "GET",
         mode: "cors",
         credentials: "include",
@@ -14,16 +12,16 @@ export const fetchData = (url, body = undefined) => {
         },
       })
         .then((res) => {
-          return res.json();
+          return res.clone().json();
         })
         .then((d) => {
-          result = d;
+          return d;
         })
         .catch((err) => {
           throw err;
         });
     } else {
-      fetch(url, {
+      return fetch(url, {
         method: "POST",
         mode: "cors",
         credentials: "include",
@@ -34,17 +32,11 @@ export const fetchData = (url, body = undefined) => {
         body: JSON.stringify(body),
       })
         .then((res) => {
-          return res.json();
-        })
-        .then((d) => {
-          result = d;
-          console.log(result);
+          return res;
         })
         .catch((err) => {
           throw err;
         });
     }
   }
-
-  return result;
 };

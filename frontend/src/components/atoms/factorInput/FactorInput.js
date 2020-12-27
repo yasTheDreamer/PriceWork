@@ -11,7 +11,6 @@ const FactorInput = (props) => {
         name={props.name}
         id="factor"
       />
-      <Button type="submit" value="Go" />
     </div>
   );
 };

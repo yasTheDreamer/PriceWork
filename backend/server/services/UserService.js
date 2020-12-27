@@ -5,10 +5,14 @@ class UserService {
 
     if (!this.saveUser)
       throw new Error("Have to implement the saveUser method");
-    // if (!this.deleteUser)
-    //   throw new Error("Have to implement the deleteUser method");
-    // if (!this.findAllUsers)
-    //   throw new Error("Have to implement the findAllUsers method");
+
+    if (!this.getAllData)
+      throw new Error("Have to implement the getAllData method");
+
+    if (!this.recordExists)
+      throw new Error("Have to implement the recordExists method");
+    if (!this.updateRecord)
+      throw new Error("Have to implement the updateRecord method");
   }
 }
 

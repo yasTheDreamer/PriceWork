@@ -51,10 +51,40 @@ var UserServiceImpl = /*#__PURE__*/function (_UserService) {
       if (user && _typeof(user) === "object") {
         try {
           var UserRepository = new _UserRepositoryImpl["default"]();
-          UserRepository.update(user);
+          return UserRepository.update(user);
         } catch (err) {
           console.log("user may be undefined or not well structured" + err);
         }
+      }
+    }
+  }, {
+    key: "getAllData",
+    value: function getAllData(res) {
+      try {
+        var UserRepository = new _UserRepositoryImpl["default"]();
+        UserRepository.findAll(res);
+      } catch (err) {
+        console.log("cannot fetch data from the database" + err);
+      }
+    }
+  }, {
+    key: "recordExists",
+    value: function recordExists(key) {
+      try {
+        var UserRepository = new _UserRepositoryImpl["default"]();
+        return UserRepository.exists(key);
+      } catch (err) {
+        console.log("error checking if the record exist" + err);
+      }
+    }
+  }, {
+    key: "updateRecord",
+    value: function updateRecord(key, data) {
+      try {
+        var UserRepository = new _UserRepositoryImpl["default"]();
+        return UserRepository.updateRecord(key, data);
+      } catch (err) {
+        console.log("couldn't update record" + err);
       }
     }
   }]);

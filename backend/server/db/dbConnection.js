@@ -3,7 +3,7 @@ import admin from "firebase-admin";
 
 //firebase.initializeApp(firebaseConfig);
 
-admin.initializeApp(firebaseConfig);
+export const ref = admin.initializeApp(firebaseConfig);
 
 // database setup
 //export default firebase;

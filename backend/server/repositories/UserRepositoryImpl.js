@@ -1,5 +1,10 @@
 import UserRepository from "./UserRepository";
-import { writeUserData } from "../db/UserSchema";
+import {
+  writeUserData,
+  readData,
+  recordExists,
+  updateRecord,
+} from "../db/UserSchema";
 
 class UserRepositoryImpl extends UserRepository {
   constructor() {
@@ -8,7 +13,21 @@ class UserRepositoryImpl extends UserRepository {
 
   update(user) {
     const userToUpdate = writeUserData(user);
-    console.log(userToUpdate.key);
+    return userToUpdate.key;
+  }
+
+  findAll(res) {
+    readData(res);
+  }
+
+  exists(key) {
+    return recordExists(key);
+  }
+
+  updateRecord(key, data) {
+    const updatedRecord = updateRecord(key, data);
+
+    return updatedRecord;
   }
 }
 

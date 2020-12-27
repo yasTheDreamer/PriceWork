@@ -3,6 +3,7 @@ import FormFragement from "../../molecules/formFragement/FormFragement";
 import FactorPlusIcon from "../../atoms/factorPlusIcon/FactorPlusIcon";
 import Button from "../../atoms/button/Button";
 import "./Style.css";
+import { Steps, Step, StepComponentProps } from "react-step-builder";
 
 const Form = () => {
   const [factor, setFactor] = useState([
@@ -11,6 +12,18 @@ const Form = () => {
       value: "",
       for: "Salary",
       type: "number",
+    },
+    {
+      title: "Job",
+      value: "",
+      for: "Job",
+      type: "text",
+    },
+    {
+      title: "Country",
+      value: "",
+      for: "Country",
+      type: "text",
     },
   ]);
 
@@ -36,24 +49,17 @@ const Form = () => {
   return (
     <div className="form__container">
       <div className="main__form">
-        <FactorPlusIcon />
-        <form className="main__form--form" id="main__form--form">
-          <FormFragement
-            for={factor[0].for}
-            title={factor[0].title}
-            value={factor[0].value}
-            type={factor[0].type}
-          />
-        </form>
+        {/* <FactorPlusIcon /> */}
+        <Steps>
+          {factor.map((f) => {
+            return <Step title={f.title} component={FormFragement} />;
+          })}
+        </Steps>
 
         <div className="formFragement__container">
           {stats.map((stat, i) => {
             return <FormFragement title={stat.text} value={stat.value} />;
           })}
-        </div>
-        <div className="control__buttons">
-          <Button type="button" value="back" />
-          <Button type="button" value="next" />
         </div>
       </div>
     </div>

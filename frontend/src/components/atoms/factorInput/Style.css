@@ -20,4 +20,6 @@ input[type="number"] {
 
 .factorInput__container {
   display: flex;
+  width: 100%;
+  justify-content: center;
 }
