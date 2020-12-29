@@ -40,6 +40,22 @@ export const recordExists = (key) => {
   return false;
 };
 
+export const getRecordFromDB = (key) => {
+  let docRef = null;
+
+  docRef = admin.database().ref(`users/${key}`);
+
+  return docRef.once(
+    "value",
+    (snapshot) => {
+      return { user: snapshot.val() };
+    },
+    (err) => {
+      throw new Error(err);
+    }
+  );
+};
+
 export const updateRecord = (key, data) => {
   let updatedRecord;
   if (key && recordExists(key)) {

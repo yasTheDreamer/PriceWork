@@ -1,3 +1,5 @@
+import React, { useState, useCallback } from "react";
+import User from "../models/User";
 export const constructUser = (req) => {
   let user = new User();
 
@@ -13,3 +15,11 @@ export const constructUser = (req) => {
 
   return user.build();
 };
+
+export function useForceUpdate() {
+  const [, forceUpdate] = useState();
+
+  return useCallback(() => {
+    forceUpdate((s) => !s);
+  }, []);
+}

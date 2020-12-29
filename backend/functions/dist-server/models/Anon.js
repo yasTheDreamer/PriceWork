@@ -2,22 +2,7 @@
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports["default"] = void 0;
-
-var _UserRepository2 = _interopRequireDefault(require("./UserRepository"));
-
-var _UserSchema = require("../db/UserSchema");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -33,48 +18,20 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-var UserRepositoryImpl = /*#__PURE__*/function (_UserRepository) {
-  _inherits(UserRepositoryImpl, _UserRepository);
+var User = /*#__PURE__*/function (_User) {
+  _inherits(User, _User);
 
-  var _super = _createSuper(UserRepositoryImpl);
+  var _super = _createSuper(User);
 
-  function UserRepositoryImpl() {
-    _classCallCheck(this, UserRepositoryImpl);
+  function User(anon) {
+    var _this;
 
-    return _super.call(this);
+    _classCallCheck(this, User);
+
+    _this = _super.call(this, anon);
+    _this.User.socialLogin1 = null;
+    return _this;
   }
 
-  _createClass(UserRepositoryImpl, [{
-    key: "update",
-    value: function update(user) {
-      var userToUpdate = (0, _UserSchema.writeUserData)(user);
-      return userToUpdate.key;
-    }
-  }, {
-    key: "findAll",
-    value: function findAll(res) {
-      (0, _UserSchema.readData)(res);
-    }
-  }, {
-    key: "exists",
-    value: function exists(key) {
-      return (0, _UserSchema.recordExists)(key);
-    }
-  }, {
-    key: "updateRecord",
-    value: function updateRecord(key, data) {
-      var updatedRecord = (0, _UserSchema.updateRecord)(key, data);
-      return updatedRecord;
-    }
-  }, {
-    key: "getRecord",
-    value: function getRecord(key) {
-      return (0, _UserSchema.getRecordFromDB)(key);
-    }
-  }]);
-
-  return UserRepositoryImpl;
-}(_UserRepository2["default"]);
-
-var _default = UserRepositoryImpl;
-exports["default"] = _default;
+  return User;
+}(User);

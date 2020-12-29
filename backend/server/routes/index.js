@@ -21,9 +21,17 @@ router.post("/save", (req, res, next) => {
     req.session.token &&
     service.recordExists(req.session.token)
   ) {
-    let key = service.updateRecord(req.session.token, user);
-    if (key) res.status(200).send("data updated");
-    else res.status(500).send("documents key is not defined" + key);
+    let record = service.getRecord(req.session.token);
+    let rec = async () => {
+      const r = record;
+      return r;
+    };
+
+    res.status(200).send("record is " + rec());
+
+    // let key = service.updateRecord(req.session.token, user);
+    // if (key) res.status(200).send("data updated");
+    // else res.status(500).send("documents key is not defined" + key);
   } else if (req.session && !req.session.token && user.salary) {
     let key = service.saveUser(user);
     updateSessionToken(key, req, res);

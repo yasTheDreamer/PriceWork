@@ -61,16 +61,29 @@ var getMax = function getMax(data) {
 
 exports.getMax = getMax;
 
+var getSum = function getSum(total, num) {
+  return total + Math.round(num);
+};
+
 var averageSalary = function averageSalary(data) {
-  var min = getMin(data);
-  var max = getMax(data);
-  return (max + min) / 2;
+  var array = Object.values(data);
+  var salaries = [];
+  array.forEach(function (arr) {
+    if (arr.salary) salaries.push(arr.salary);
+  });
+  console.log(array);
+  var sum = salaries.reduce(getSum, 0);
+  console.log("sum : ", sum);
+  console.log("length : ", array.length);
+  return sum / array.length;
 };
 
 exports.averageSalary = averageSalary;
 
 var constructUser = function constructUser(req) {
-  var user = new _User["default"]();
+  var us = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  var user = null;
+  if (us) user = new _User["default"](us);else user = new _User["default"]();
   if (req.body.salary) user.withSalary(req.body.salary);
   if (req.body.jobTitle) user.withJobTitle(req.body.jobTitle);
   if (req.body.experience) user.withYearsOfExperience(req.body.experience);

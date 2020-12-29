@@ -1,70 +1,102 @@
-# Getting Started with Create React App
+# Why Hosting The Back-end/Front-end seprately
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Making Changes To One Of Them.
 
-## Available Scripts
+    let's say our code base grows bigger and you want to change only one headline on
+    the frontend, we are going to have to deploy them both together even though the backend
+    didn't change.
 
-In the project directory, you can run:
+## One of your frontends server crashes.
 
-### `npm start`
+    say our application grows bigger (more clients) and we don't want to start over from scratch
+    but to extend our code, so we create multiple frontends that represent different other services that are hosted on different servers and are connected to the same backend
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+    if the first frontend crashes, the second frontend will be intact and can interact with the backend.
+    so users using the second service can still use it.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+# File/Foldes Generated/Created
 
-### `npm test`
+## Generated
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    - all files/folders biggining with a dot are not to be changed.
+    - The node_modules folder cannot be edited directly.
 
-### `npm run build`
+### backend files/folders
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### firebase files
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+**database.rules.json!** : system generated : the rules of read and write can be safely changed (if you know what you are doing)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**firebase.json!** : system generated : is not to be edited directly, it is modified when you require and intall a new service
+like firebase storage for example
 
-### `npm run eject`
+#### github files/folders
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+**nodes-modules folder** : system generated : not to be touched (unless you know what youre doing and you still have package.json to generate the folder again).
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+**package-lock.json** : system generated : not to be edited (unless you want to regenrate it using package.json)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+**package.json!** : system generated : not to be edited at all.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### frontend files/folders
 
-## Learn More
+**The same applies to the frontend!**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Generated files/folders
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+**All the other files/folders are created!**
 
-### Code Splitting
+## What you need to modify to test it localy
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+**Nothing!**
 
-### Analyzing the Bundle Size
+## Commands and the way to test locally.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### start the backend
 
-### Making a Progressive Web App
+    - open project in vscode
+    - from the top panel choose Termina => New Terminal
+    - write the command : cd backend
+    - write the command : npm install -g firebase-tools (to install globally only once)
+    - write the command : npm install (only the first time)  (you have to have nodejs installed)
+    - write the command : firebase login (a window will open and login)
+    - write the command : firebase init
+    - choose the services : functions and database (using the space bar, up and down keys, and enter)
+    - write the command : npm run localfirebase
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### start the frontend
 
-### Advanced Configuration
+    - open a new terminal in vscode (you have two terminals now)
+    - write the command : cd frontend
+    - write the command : npm install (only the first time) (you have to have nodejs installed)
+    - write the command : firebase login (a window will open and login)
+    - write the command : firebase init
+    - choose the services : hosting (using the space bar, up and down keys, and enter)
+    - write the command : npm run start (this will open the interface in your browser)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Commands and the way to deploy.
 
-### Deployment
+### deploy the backend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+    - open project in vscode
+    - from the top panel choose Terminal => New Terminal
+    - write the command : cd backend
+    - write the command : npm install (only the first time)  (you have to have nodejs installed)
+    - write the command : firebase login (a window will open and login)
+    - write the command : firebase init
+    - choose the services : functions and database (using the space bar, up and down keys, and enter)
+    - after installing write the command : npm run firebase
 
-### `npm run build` fails to minify
+### deploy the frontend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+    - open a new terminal in vscode (you have two terminals now)
+    - write the command : cd frontend
+    - write the command : npm install (only the first time) (you have to have nodejs installed)
+    - write the command : firebase login (a window will open and login)
+    - write the command : firebase init
+    - choose the services : hosting (using the space bar, up and down keys, and enter)
+    - write the command : firebase deploy
+
+## To Delete
+
+docRef.once('child_removed')

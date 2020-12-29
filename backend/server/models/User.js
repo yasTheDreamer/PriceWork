@@ -1,17 +1,21 @@
 class User {
-  constructor() {
-    this.User = {};
-    this.User.salary = null;
-    this.User.jobTitle = null;
-    this.User.address = {};
-    this.User.address.country = null;
-    this.User.address.state = null;
-    this.User.address.zipCode = null;
-    this.User.experience = null;
-    this.User.email = null;
-    this.User.socialLogin1 = null;
-    this.User.socialLogin2 = null;
-    this.User.timeStamp = `${new Date().today()}@${new Date().timeNow()}`;
+  constructor(user, id) {
+    if (!arguments.length) {
+      this.User = {};
+      this.User.salary = null;
+      this.User.jobTitle = null;
+      this.User.address = {};
+      this.User.address.country = null;
+      this.User.address.state = null;
+      this.User.address.zipCode = null;
+      this.User.experience = null;
+      this.User.email = null;
+      this.User.socialLogin1 = null;
+      this.User.socialLogin2 = null;
+      this.User.timeStamp = `${new Date().today()}@${new Date().timeNow()}`;
+    } else {
+      if (user) this.User = user;
+    }
   }
 
   withSalary(salary) {

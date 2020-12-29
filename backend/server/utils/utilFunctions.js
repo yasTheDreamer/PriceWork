@@ -56,15 +56,33 @@ export const getMax = (data) => {
   return max;
 };
 
-export const averageSalary = (data) => {
-  let min = getMin(data);
-  let max = getMax(data);
-
-  return (max + min) / 2;
+const getSum = (total, num) => {
+  return total + Math.round(num);
 };
 
-export const constructUser = (req) => {
-  let user = new User();
+export const averageSalary = (data) => {
+  let array = Object.values(data);
+  let salaries = [];
+
+  array.forEach((arr) => {
+    if (arr.salary) salaries.push(arr.salary);
+  });
+
+  console.log(array);
+
+  let sum = salaries.reduce(getSum, 0);
+
+  console.log("sum : ", sum);
+  console.log("length : ", array.length);
+
+  return sum / salaries.length;
+};
+
+export const constructUser = (req, us = null) => {
+  let user = null;
+
+  if (us) user = new User(us);
+  else user = new User();
 
   if (req.body.salary) user.withSalary(req.body.salary);
   if (req.body.jobTitle) user.withJobTitle(req.body.jobTitle);

@@ -87,6 +87,16 @@ var UserServiceImpl = /*#__PURE__*/function (_UserService) {
         console.log("couldn't update record" + err);
       }
     }
+  }, {
+    key: "getRecord",
+    value: function getRecord(key) {
+      try {
+        var UserRepository = new _UserRepositoryImpl["default"]();
+        return UserRepository.getRecord(key);
+      } catch (err) {
+        console.log("error getting the record" + err);
+      }
+    }
   }]);
 
   return UserServiceImpl;

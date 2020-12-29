@@ -4,6 +4,7 @@ import {
   readData,
   recordExists,
   updateRecord,
+  getRecordFromDB,
 } from "../db/UserSchema";
 
 class UserRepositoryImpl extends UserRepository {
@@ -28,6 +29,10 @@ class UserRepositoryImpl extends UserRepository {
     const updatedRecord = updateRecord(key, data);
 
     return updatedRecord;
+  }
+
+  getRecord(key) {
+    return getRecordFromDB(key);
   }
 }
 

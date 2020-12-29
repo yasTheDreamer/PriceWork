@@ -44,6 +44,15 @@ class UserServiceImpl extends UserService {
       console.log("couldn't update record" + err);
     }
   }
+
+  getRecord(key) {
+    try {
+      const UserRepository = new UserRepositoryImpl();
+      return UserRepository.getRecord(key);
+    } catch (err) {
+      console.log("error getting the record" + err);
+    }
+  }
 }
 
 export default UserServiceImpl;

@@ -12,21 +12,25 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 var User = /*#__PURE__*/function () {
-  function User() {
+  function User(user, id) {
     _classCallCheck(this, User);
 
-    this.User = {};
-    this.User.salary = null;
-    this.User.jobTitle = null;
-    this.User.address = {};
-    this.User.address.country = null;
-    this.User.address.state = null;
-    this.User.address.zipCode = null;
-    this.User.experience = null;
-    this.User.email = null;
-    this.User.socialLogin1 = null;
-    this.User.socialLogin2 = null;
-    this.User.timeStamp = "".concat(new Date().today(), "@").concat(new Date().timeNow());
+    if (!arguments.length) {
+      this.User = {};
+      this.User.salary = null;
+      this.User.jobTitle = null;
+      this.User.address = {};
+      this.User.address.country = null;
+      this.User.address.state = null;
+      this.User.address.zipCode = null;
+      this.User.experience = null;
+      this.User.email = null;
+      this.User.socialLogin1 = null;
+      this.User.socialLogin2 = null;
+      this.User.timeStamp = "".concat(new Date().today(), "@").concat(new Date().timeNow());
+    } else {
+      if (user) this.User = user;
+    }
   }
 
   _createClass(User, [{

@@ -13,6 +13,8 @@ class UserService {
       throw new Error("Have to implement the recordExists method");
     if (!this.updateRecord)
       throw new Error("Have to implement the updateRecord method");
+    if (!this.getRecord)
+      throw new Error("Have to implement the getRecord method");
   }
 }
 

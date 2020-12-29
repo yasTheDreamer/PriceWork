@@ -15,6 +15,7 @@ var UserService = function UserService() {
   if (!this.getAllData) throw new Error("Have to implement the getAllData method");
   if (!this.recordExists) throw new Error("Have to implement the recordExists method");
   if (!this.updateRecord) throw new Error("Have to implement the updateRecord method");
+  if (!this.getRecord) throw new Error("Have to implement the getRecord method");
 };
 
 var _default = UserService;

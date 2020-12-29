@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useContext, useCallback, useEffect } from "react";
 import CustomTitle from "../../atoms/customTitle/CustomTitle";
 import FactorInput from "../../atoms/factorInput/FactorInput";
-import { StepComponentProps } from "react-step-builder";
 import Button from "../../atoms/button/Button";
 import "./Style.css";
+import { summaryContext } from "../../../contexts/SummaryContext";
+import { useForceUpdate } from "../../../utils/utilFunctions";
 
 const FormFragement = (props) => {
   let element;
+  const [Summary, setSummary] = useContext(summaryContext);
+  const forceUpdate = useForceUpdate();
+
+  const onClick = useCallback(() => {
+    forceUpdate();
+  }, [forceUpdate]);
+
+  useEffect(() => {}, [Summary]);
 
   if (props.value) {
     element = <CustomTitle for={props.for} title={props.value} />;
@@ -29,14 +38,16 @@ const FormFragement = (props) => {
           <Button
             type="button"
             value="back"
-            operation="write"
+            operation="read"
             onClick={props.prev}
+            update={onClick}
           />
           <Button
             type="button"
             value="next"
-            operation="read"
+            operation="write"
             onClick={props.next}
+            update={onClick}
           />
         </div>
       </>

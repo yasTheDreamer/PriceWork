@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import FormFragement from "../../molecules/formFragement/FormFragement";
-import FactorPlusIcon from "../../atoms/factorPlusIcon/FactorPlusIcon";
-import Button from "../../atoms/button/Button";
 import "./Style.css";
-import { Steps, Step, StepComponentProps } from "react-step-builder";
+import { Steps, Step } from "react-step-builder";
+import { summaryContext } from "../../../contexts/SummaryContext";
 
 const Form = () => {
+  const [Summary, setSummary] = useContext(summaryContext);
+  const [Refresh, setRefresh] = useState(false);
+
   const [factor, setFactor] = useState([
     {
       title: "Salary",
@@ -30,21 +32,46 @@ const Form = () => {
   const [stats, setStats] = useState([
     {
       text: "min",
-      value: "10",
+      value: "0",
     },
     {
       text: "max",
-      value: "11",
+      value: "0",
     },
     {
       text: "average",
-      value: "12",
+      value: "0",
     },
     {
       text: "Total records",
-      value: "14",
+      value: "0",
     },
   ]);
+
+  const populateStats = () => {
+    stats.forEach((s, i) => {
+      switch (s.text) {
+        case "min":
+          s.value = `${Summary.min}`;
+          break;
+        case "max":
+          s.value = `${Summary.max}`;
+          break;
+        case "average":
+          s.value = `${Summary.average}`;
+          break;
+        case "Total records":
+          s.value = `${Summary.total}`;
+          break;
+      }
+    });
+  };
+
+  useEffect(() => {
+    console.log("popoulating stats ...");
+    populateStats();
+    setRefresh(!Refresh);
+  }, [Summary]);
 
   return (
     <div className="form__container">
@@ -57,8 +84,14 @@ const Form = () => {
         </Steps>
 
         <div className="formFragement__container">
-          {stats.map((stat, i) => {
-            return <FormFragement title={stat.text} value={stat.value} />;
+          {stats.map((stat) => {
+            return (
+              <FormFragement
+                title={stat.text}
+                value={stat.value}
+                summary={Refresh}
+              />
+            );
           })}
         </div>
       </div>

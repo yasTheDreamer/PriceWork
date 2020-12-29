@@ -11,6 +11,8 @@ class UserRepository {
       throw new Error("Have to implement exists method");
     if (this.updateRecord === undefined)
       throw new Error("Have to implement updateRecord method");
+    if (this.getRecord === undefined)
+      throw new Error("Have to implement getRecord method");
   }
 }
 

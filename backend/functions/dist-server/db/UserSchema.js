@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateRecord = exports.recordExists = exports.readData = exports.writeUserData = void 0;
+exports.updateRecord = exports.getRecordFromDB = exports.recordExists = exports.readData = exports.writeUserData = void 0;
 
 var _dbConnection = _interopRequireDefault(require("./dbConnection"));
 
@@ -51,6 +51,20 @@ var recordExists = function recordExists(key) {
 };
 
 exports.recordExists = recordExists;
+
+var getRecordFromDB = function getRecordFromDB(key) {
+  var docRef = null;
+  docRef = _dbConnection["default"].database().ref("users/".concat(key));
+  return docRef.once("value", function (snapshot) {
+    return {
+      user: snapshot.val()
+    };
+  }, function (err) {
+    throw new Error(err);
+  });
+};
+
+exports.getRecordFromDB = getRecordFromDB;
 
 var updateRecord = function updateRecord(key, data) {
   var updatedRecord;
