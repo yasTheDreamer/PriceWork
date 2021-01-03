@@ -21,7 +21,7 @@ const Button = (props) => {
   const operation = () => {
     switch (opera) {
       case "read":
-        fetchDB(READ_DATA).then((res) => {
+        fetchDB(DEV_READ_DATA).then((res) => {
           let summary = res.summary;
           setSummary({
             min: `${summary.min}`,
@@ -32,8 +32,8 @@ const Button = (props) => {
         });
         break;
       case "write":
-        fetchDB(SAVE_DATA, Record).then(() => {
-          fetchDB(READ_DATA).then((res) => {
+        fetchDB(DEV_SAVE_DATA, Record).then(() => {
+          fetchDB(DEV_READ_DATA).then((res) => {
             let summary = res.summary;
             setSummary({
               min: `${summary.min}`,

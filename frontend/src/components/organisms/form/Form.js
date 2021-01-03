@@ -3,6 +3,7 @@ import FormFragement from "../../molecules/formFragement/FormFragement";
 import "./Style.css";
 import { Steps, Step } from "react-step-builder";
 import { summaryContext } from "../../../contexts/SummaryContext";
+import { inputController } from "../../../js/FormController";
 
 const Form = () => {
   const [Summary, setSummary] = useContext(summaryContext);
@@ -73,13 +74,25 @@ const Form = () => {
     setRefresh(!Refresh);
   }, [Summary]);
 
+  useEffect(() => {
+    inputController();
+  }, []);
+
   return (
     <div className="form__container">
       <div className="main__form">
         {/* <FactorPlusIcon /> */}
         <Steps>
           {factor.map((f) => {
-            return <Step title={f.title} component={FormFragement} />;
+            return (
+              <Step
+                title={f.title}
+                for={f.for}
+                type={f.type}
+                value={f.value}
+                component={FormFragement}
+              />
+            );
           })}
         </Steps>
 

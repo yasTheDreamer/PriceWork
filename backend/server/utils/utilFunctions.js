@@ -73,26 +73,41 @@ export const averageSalary = (data) => {
   let sum = salaries.reduce(getSum, 0);
 
   console.log("sum : ", sum);
-  console.log("length : ", array.length);
+  console.log("length : ", salaries.length);
 
   return sum / salaries.length;
 };
 
-export const constructUser = (req, us = null) => {
+export const constructUser = (req, us) => {
   let user = null;
 
   if (us) user = new User(us);
   else user = new User();
 
-  if (req.body.salary) user.withSalary(req.body.salary);
-  if (req.body.jobTitle) user.withJobTitle(req.body.jobTitle);
-  if (req.body.experience) user.withYearsOfExperience(req.body.experience);
-  if (req.body.email) user.withEmailAdress(req.body.email);
-  if (req.body.socialLogin1) user.withSocialInfo1Login(req.body.socialLogin1);
-  if (req.body.socialLogin2) user.withSocialInfo1Login(req.body.socialLogin2);
-  if (req.body.address.country) user.withCountry(req.body.address.country);
-  if (req.body.address.state) user.withState(req.body.address.state);
-  if (req.body.address.zipCode) user.withZipCode(req.body.address.zipCode);
+  if (req.body.salary && !user.User.salary) user.withSalary(req.body.salary);
+  if (req.body.jobTitle && !user.User.jobTitle)
+    user.withJobTitle(req.body.jobTitle);
+  if (req.body.experience && !user.User.experience)
+    user.withYearsOfExperience(req.body.experience);
+  if (req.body.email && !user.User.email) user.withEmailAdress(req.body.email);
+  if (req.body.socialLogin1 && !user.User.socialLogin1)
+    user.withSocialInfo1Login(req.body.socialLogin1);
+  if (req.body.socialLogin2 && !user.User.socialLogin2)
+    user.withSocialInfo1Login(req.body.socialLogin2);
+  if (
+    req.body.address.country &&
+    user.User.address &&
+    !user.User.address.country
+  )
+    user.withCountry(req.body.address.country);
+  if (req.body.address.state && user.User.address && !user.User.address.state)
+    user.withState(req.body.address.state);
+  if (
+    req.body.address.zipCode &&
+    user.User.address &&
+    !user.User.address.zipCode
+  )
+    user.withZipCode(req.body.address.zipCode);
 
   return user.build();
 };
@@ -101,5 +116,15 @@ export const updateSessionToken = (key, req, res) => {
   if (key) {
     req.session.token = key;
     res.status(200).send("data saved");
+  } else {
+    res.status(500).send("data could not be saved");
   }
+};
+
+export const setListing = (snapshot) => {
+  let currentSnapshot;
+
+  currentSnapshot = snapshot.val();
+
+  return currentSnapshot;
 };

@@ -1,13 +1,4 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.firebaseConfig = void 0;
-
-var _dotenv = _interopRequireDefault(require("dotenv"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+"use strict";Object.defineProperty(exports, "__esModule", { value: true });exports.firebaseConfig = void 0;var _dotenv = _interopRequireDefault(require("dotenv"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { "default": obj };}
 
 var dotenv = _dotenv["default"].config();
 
@@ -18,6 +9,5 @@ var firebaseConfig = {
   projectId: "priceworkapp",
   storageBucket: "priceworkapp.appspot.com",
   messagingSenderId: "308622328280",
-  appId: "1:308622328280:web:4a4373af877f6f5c3872ad"
-};
-exports.firebaseConfig = firebaseConfig;
+  appId: "1:308622328280:web:4a4373af877f6f5c3872ad" };exports.firebaseConfig = firebaseConfig;
+//# sourceMappingURL=dbConfig.js.map

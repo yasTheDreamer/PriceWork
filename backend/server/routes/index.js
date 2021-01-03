@@ -1,7 +1,11 @@
 import express from "express";
 //testing the firebase database insert
 import UserServiceImpl from "../services/UserServiceImpl";
-import { constructUser, updateSessionToken } from "../utils/utilFunctions";
+import {
+  constructUser,
+  updateSessionToken,
+  setListing,
+} from "../utils/utilFunctions";
 var router = express.Router();
 
 /* GET home page. */
@@ -14,24 +18,28 @@ router.post("/save", (req, res, next) => {
   let service = new UserServiceImpl();
 
   console.log(req.session);
-
   let user = constructUser(req);
+
   if (
     req.session &&
     req.session.token &&
     service.recordExists(req.session.token)
   ) {
     let record = service.getRecord(req.session.token);
-    let rec = async () => {
-      const r = record;
-      return r;
-    };
-
-    res.status(200).send("record is " + rec());
-
-    // let key = service.updateRecord(req.session.token, user);
-    // if (key) res.status(200).send("data updated");
-    // else res.status(500).send("documents key is not defined" + key);
+    record.then((r) => {
+      let rec = JSON.stringify(setListing(r));
+      if (rec) {
+        if (!rec.address) {
+          rec = JSON.parse(rec);
+          rec.address = {};
+          JSON.stringify(rec);
+        }
+        user = constructUser(req, rec);
+        let key = service.updateRecord(req.session.token, user);
+        if (key) res.status(200).send("data updated");
+        else res.status(500).send("error updating the document " + key);
+      }
+    });
   } else if (req.session && !req.session.token && user.salary) {
     let key = service.saveUser(user);
     updateSessionToken(key, req, res);

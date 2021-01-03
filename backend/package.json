@@ -3,20 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "node ./functions/dist-server/bin/www.js",
+    "start": "node functions/dist-server/bin/www.js",
     "dev": "npm run transpile & npm run start",
-    "transpile": "babel ./server --out-dir functions/dist-server",
+    "transpile": "babel ./server --out-dir functions/dist-server --source-maps",
     "firebase": "npm run transpile & firebase deploy",
     "localfirebase": "npm run transpile & firebase serve --only functions",
-    "watch:dev": "nodemon"
+    "watch:localfirebase": "nodemon"
   },
+  
   "babel": {
     "presets": [
       "@babel/preset-env"
-    ]
+    ],
+    "sourceMaps": true,
+    "retainLines": true
   },
   "nodemonConfig": {
-    "exec": "npm run dev",
+    "exec": "npm run localfirebase",
     "watch": [
       "server/*",
       "public/*"
@@ -41,10 +44,13 @@
     "http-errors": "~1.6.3",
     "mongoose": "^5.11.8",
     "morgan": "~1.9.1",
+    "node-babel": "^0.1.2",
     "nodemon": "^2.0.6",
     "redis": "^3.0.2"
   },
   "devDependencies": {
+    "@babel/node": "^7.12.10",
+    "@babel/register": "^7.12.10",
     "firebase": "^8.2.1",
     "firebase-admin": "^9.4.2",
     "firebase-functions": "^3.13.0"

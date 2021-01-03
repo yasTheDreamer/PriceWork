@@ -48,7 +48,7 @@ export const getRecordFromDB = (key) => {
   return docRef.once(
     "value",
     (snapshot) => {
-      return { user: snapshot.val() };
+      return snapshot.val();
     },
     (err) => {
       throw new Error(err);

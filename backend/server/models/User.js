@@ -1,5 +1,5 @@
 class User {
-  constructor(user, id) {
+  constructor(user) {
     if (!arguments.length) {
       this.User = {};
       this.User.salary = null;
@@ -13,8 +13,12 @@ class User {
       this.User.socialLogin1 = null;
       this.User.socialLogin2 = null;
       this.User.timeStamp = `${new Date().today()}@${new Date().timeNow()}`;
-    } else {
-      if (user) this.User = user;
+    } else if (user) {
+      this.User = {};
+      this.User.address = {};
+      this.User.address.country = user.address.country || null;
+      this.User.address.state = user.address.state || null;
+      this.User.address.zipCode = user.address.zipCode || null;
     }
   }
 

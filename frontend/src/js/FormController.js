@@ -1,5 +1,3 @@
-import User from "../models/User";
-
 export const formController = (user) => {
   const input = document.querySelector("#factor");
 
@@ -16,4 +14,16 @@ export const formController = (user) => {
   }
 
   return user.build();
+};
+
+export const inputController = () => {
+  const input = document.querySelector("#factor");
+
+  if (input.type == "number") {
+    input.addEventListener("keypress", (evt) => {
+      if (evt.keyCode < 48 || evt.keyCode > 57) {
+        evt.preventDefault();
+      }
+    });
+  }
 };
