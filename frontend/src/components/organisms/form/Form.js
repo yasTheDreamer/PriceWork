@@ -15,18 +15,35 @@ const Form = () => {
       value: "",
       for: "Salary",
       type: "number",
+      list: "",
     },
     {
       title: "Job",
       value: "",
       for: "Job",
       type: "text",
+      list: "",
     },
     {
-      title: "Country",
+      title: "State",
       value: "",
-      for: "Country",
+      for: "State",
       type: "text",
+      list: "stateList",
+    },
+    {
+      title: "City",
+      value: "",
+      for: "City",
+      type: "text",
+      list: "cityList",
+    },
+    {
+      title: "ZipCode",
+      value: "",
+      for: "ZipCode",
+      type: "number",
+      list: "zipcodeList",
     },
   ]);
 
@@ -90,6 +107,7 @@ const Form = () => {
                 for={f.for}
                 type={f.type}
                 value={f.value}
+                list={f.list}
                 component={FormFragement}
               />
             );

@@ -1,13 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./Style.css";
 import { fetchDB } from "../../../api/userApi";
+import { populateStateList } from "../../../utils/utilFunctions";
 import {
   READ_DATA,
   SAVE_DATA,
   DEV_READ_DATA,
   DEV_SAVE_DATA,
+  RAPID_API_KEY,
 } from "../../../utils/env";
 import User from "../../../models/User";
+
 import { summaryContext } from "../../../contexts/SummaryContext";
 import { recordContext } from "../../../contexts/RecordContext";
 import { formController } from "../../../js/FormController";
@@ -51,6 +54,16 @@ const Button = (props) => {
     setRecord(formController(user));
   };
 
+  const populateLists = () => {
+    const input = document.querySelector("#factor");
+
+    switch (input.name) {
+      case "State":
+        populateStateList();
+        break;
+    }
+  };
+
   const op = props.onClick;
 
   useEffect(() => {
@@ -74,7 +87,9 @@ const Button = (props) => {
         type={props.type}
         value={props.value}
         id="factor__button"
+        list={props.list}
         onClick={async () => {
+          populateLists();
           setUser();
           await setOpera(props.operation);
           op();

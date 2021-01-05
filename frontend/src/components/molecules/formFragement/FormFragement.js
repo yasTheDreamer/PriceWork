@@ -40,6 +40,7 @@ const FormFragement = (props) => {
             value="back"
             operation="read"
             onClick={props.prev}
+            list={props.list}
             update={onClick}
           />
           <Button
@@ -47,6 +48,7 @@ const FormFragement = (props) => {
             value="next"
             operation="write"
             onClick={props.next}
+            list={props.list}
             update={onClick}
           />
         </div>

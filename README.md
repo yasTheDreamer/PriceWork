@@ -100,3 +100,10 @@ like firebase storage for example
 ## To Delete
 
 docRef.once('child_removed')
+
+## APIs AND KEYS
+
+**zipcodeapi**
+
+    - Application Key : 79tbtMeAyJ2qGptnrRsstMOpHNNaIZxWJ6KvDsZcJBScIpryBllMiVDIo5Dac2F3
+    - Client Key : js-XJLW32eQQYjxFEKAWSbZaOMrX0TNI3XRtA3N9AF5GUGBvbnt1OZtWCICR3ZrdbB4

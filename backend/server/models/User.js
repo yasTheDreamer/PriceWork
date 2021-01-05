@@ -5,7 +5,7 @@ class User {
       this.User.salary = null;
       this.User.jobTitle = null;
       this.User.address = {};
-      this.User.address.country = null;
+      this.User.address.city = null;
       this.User.address.state = null;
       this.User.address.zipCode = null;
       this.User.experience = null;
@@ -16,7 +16,7 @@ class User {
     } else if (user) {
       this.User = {};
       this.User.address = {};
-      this.User.address.country = user.address.country || null;
+      this.User.address.city = user.address.city || null;
       this.User.address.state = user.address.state || null;
       this.User.address.zipCode = user.address.zipCode || null;
     }
@@ -32,8 +32,8 @@ class User {
     return this;
   }
 
-  withCountry(country) {
-    this.User.address.country = country;
+  withCity(city) {
+    this.User.address.city = city;
     return this;
   }
 

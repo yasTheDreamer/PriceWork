@@ -8,8 +8,14 @@ export const formController = (user) => {
     case "Job":
       user.withJobTitle(input.value);
       break;
-    case "Country":
-      user.withCountry(input.value);
+    case "State":
+      user.withState(input.value);
+      break;
+    case "City":
+      user.withCity(input.value);
+      break;
+    case "ZipCode":
+      user.withZipCode(input.value);
       break;
   }
 

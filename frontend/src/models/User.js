@@ -4,8 +4,9 @@ class User {
     this.User.salary = null;
     this.User.jobTitle = null;
     this.User.address = {};
-    this.User.address.country = null;
     this.User.address.state = null;
+    this.User.address.city = null;
+
     this.User.address.zipCode = null;
     this.User.experience = null;
     this.User.email = null;
@@ -24,8 +25,8 @@ class User {
     return this;
   }
 
-  withCountry(country) {
-    this.User.address.country = country;
+  withCity(city) {
+    this.User.address.city = city;
     return this;
   }
 

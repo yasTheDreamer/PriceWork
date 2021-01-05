@@ -94,12 +94,8 @@ var constructUser = function constructUser(req, us) {
   user.withSocialInfo1Login(req.body.socialLogin1);
   if (req.body.socialLogin2 && !user.User.socialLogin2)
   user.withSocialInfo1Login(req.body.socialLogin2);
-  if (
-  req.body.address.country &&
-  user.User.address &&
-  !user.User.address.country)
-
-  user.withCountry(req.body.address.country);
+  if (req.body.address.city && user.User.address && !user.User.address.city)
+  user.withCity(req.body.address.city);
   if (req.body.address.state && user.User.address && !user.User.address.state)
   user.withState(req.body.address.state);
   if (

@@ -8,7 +8,7 @@ var writeUserData = function writeUserData(user) {
     salary: user.salary,
     jobTitle: user.jobTitle,
     address: {
-      country: user.address.country,
+      city: user.address.city,
       state: user.address.state,
       zipCode: user.address.zipCode },
 

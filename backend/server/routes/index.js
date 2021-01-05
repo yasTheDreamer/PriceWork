@@ -29,11 +29,11 @@ router.post("/save", (req, res, next) => {
     record.then((r) => {
       let rec = JSON.stringify(setListing(r));
       if (rec) {
+        rec = JSON.parse(rec);
         if (!rec.address) {
-          rec = JSON.parse(rec);
           rec.address = {};
-          JSON.stringify(rec);
         }
+        JSON.stringify(rec);
         user = constructUser(req, rec);
         let key = service.updateRecord(req.session.token, user);
         if (key) res.status(200).send("data updated");

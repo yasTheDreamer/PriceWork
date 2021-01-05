@@ -5,7 +5,7 @@
       this.User.salary = null;
       this.User.jobTitle = null;
       this.User.address = {};
-      this.User.address.country = null;
+      this.User.address.city = null;
       this.User.address.state = null;
       this.User.address.zipCode = null;
       this.User.experience = null;
@@ -16,7 +16,7 @@
     } else if (user) {
       this.User = {};
       this.User.address = {};
-      this.User.address.country = user.address.country || null;
+      this.User.address.city = user.address.city || null;
       this.User.address.state = user.address.state || null;
       this.User.address.zipCode = user.address.zipCode || null;
     }
@@ -30,10 +30,10 @@
     jobTitle) {
       this.User.jobTitle = jobTitle;
       return this;
-    } }, { key: "withCountry", value: function withCountry(
+    } }, { key: "withCity", value: function withCity(
 
-    country) {
-      this.User.address.country = country;
+    city) {
+      this.User.address.city = city;
       return this;
     } }, { key: "withState", value: function withState(
 

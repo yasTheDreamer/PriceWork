@@ -1,4 +1,10 @@
-export const fetchData = (url, body = null) => {
+export const fetchData = (
+  url,
+  body = null,
+  apikey = null,
+  offset = null,
+  limit = null
+) => {
   if (url) {
     console.log(url);
     if (body == null) {
@@ -9,6 +15,10 @@ export const fetchData = (url, body = null) => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          "x-rapidapi-host": "wft-geo-db.p.rapidapi.com",
+          "x-rapidapi-key": apikey,
+          offset: offset,
+          limit: limit,
         },
       })
         .then((res) => {
