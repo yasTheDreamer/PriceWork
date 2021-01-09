@@ -20,7 +20,9 @@ const FormFragement = (props) => {
   if (props.value) {
     element = <CustomTitle for={props.for} title={props.value} />;
   } else {
-    element = <FactorInput type={props.type} name={props.title} />;
+    element = (
+      <FactorInput type={props.type} name={props.title} list={props.list} />
+    );
   }
   if (props.value) {
     return (
@@ -40,7 +42,6 @@ const FormFragement = (props) => {
             value="back"
             operation="read"
             onClick={props.prev}
-            list={props.list}
             update={onClick}
           />
           <Button
@@ -48,7 +49,6 @@ const FormFragement = (props) => {
             value="next"
             operation="write"
             onClick={props.next}
-            list={props.list}
             update={onClick}
           />
         </div>

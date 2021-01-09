@@ -22,7 +22,7 @@ const Form = () => {
       value: "",
       for: "Job",
       type: "text",
-      list: "",
+      list: "jobList",
     },
     {
       title: "State",
@@ -93,7 +93,7 @@ const Form = () => {
 
   useEffect(() => {
     inputController();
-  }, []);
+  }, [Refresh]);
 
   return (
     <div className="form__container">

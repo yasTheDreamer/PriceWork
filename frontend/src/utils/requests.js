@@ -3,23 +3,27 @@ export const fetchData = (
   body = null,
   apikey = null,
   offset = null,
-  limit = null
+  limit = null,
+  prefix = null,
+  credentials = "include"
 ) => {
   if (url) {
-    console.log(url);
+    let headers = {};
+    if (!url.includes("https://www.zipcodeapi.com/"))
+      headers = {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "x-rapidapi-host": "wft-geo-db.p.rapidapi.com",
+        "x-rapidapi-key": apikey,
+      };
+
+    if (prefix) url = url + `?namePrefix=${encodeURIComponent(prefix)}`;
     if (body == null) {
       return fetch(url, {
         method: "GET",
         mode: "cors",
-        credentials: "include",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "x-rapidapi-host": "wft-geo-db.p.rapidapi.com",
-          "x-rapidapi-key": apikey,
-          offset: offset,
-          limit: limit,
-        },
+        credentials: credentials,
+        headers: headers,
       })
         .then((res) => {
           return res.clone().json();

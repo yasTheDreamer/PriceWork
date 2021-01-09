@@ -5,14 +5,17 @@ import "./index.css";
 import App from "./App";
 import { SummaryProvider } from "./contexts/SummaryContext";
 import { RecordProvider } from "./contexts/RecordContext";
+import { AddressProvider } from "./contexts/AddressContext";
 
 ReactDOM.render(
   <React.StrictMode>
     <RecordProvider>
       <SummaryProvider>
-        <Router>
-          <App />
-        </Router>
+        <AddressProvider>
+          <Router>
+            <App />
+          </Router>
+        </AddressProvider>
       </SummaryProvider>
     </RecordProvider>
   </React.StrictMode>,

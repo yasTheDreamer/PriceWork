@@ -1,7 +1,8 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useContext } from "react";
 import User from "../models/User";
-import { getStates } from "../api/addressApi";
+import { getCities, getJobs, getStates, getZipCodes } from "../api/addressApi";
 import { RAPID_API_KEY } from "./env";
+import $ from "jquery";
 
 export const constructUser = (req) => {
   let user = new User();
@@ -27,27 +28,135 @@ export function useForceUpdate() {
   }, []);
 }
 
-export const populateStateList = () => {
+export const populateList = (type, state, city) => {
   const dataListInput = document.querySelector("#factor");
+  dataListInput.classList.add("loading");
   const container = document.querySelector(".factorInput__container");
 
-  const dataList = document.createElement("datalist");
+  const dataList =
+    document.getElementById(dataListInput.getAttribute("list")) ||
+    document.createElement("datalist");
   dataList.id = dataListInput.getAttribute("list");
 
-  let statesList = [];
-  let i = 0;
+  let prefix = dataListInput.value;
 
-  for (i; i < 60; i += 10) {
-    getStates(RAPID_API_KEY, i, 10).then((res) => {
-      statesList.push(res.data);
+  let List = null;
+
+  switch (type) {
+    case "State":
+      getStates(RAPID_API_KEY, null, null, prefix)
+        .then((res) => {
+          List = res.data;
+          return List;
+        })
+        .then(() => {
+          populateDataList(List, dataList, container, dataListInput, type);
+        });
+      break;
+
+    case "Job":
+      getJobs(prefix)
+        .then((res) => {
+          List = res;
+          return List;
+        })
+        .then(() => {
+          populateDataList(List, dataList, container, dataListInput, type);
+        });
+      break;
+
+    case "City":
+      if (state)
+        getCities(RAPID_API_KEY, state, prefix)
+          .then((res) => {
+            List = res.data;
+            return List;
+          })
+          .then(() => {
+            populateDataList(List, dataList, container, dataListInput, type);
+          });
+      break;
+
+    case "ZipCode":
+      if (state && city)
+        getZipCodes(state, city)
+          .then((res) => {
+            List = res.zip_codes;
+            return List;
+          })
+          .then(() => {
+            populateDataList(List, dataList, container, dataListInput, type);
+          });
+      break;
+  }
+};
+
+function populateDataList(List, dataList, container, dataListInput, type) {
+  if (List)
+    List.forEach((element) => {
+      let existingOption = null;
+      let option = null;
+
+      switch (type) {
+        case "State":
+          existingOption = document.querySelector(`#${element.name}`);
+          option = document.createElement("option");
+          option.value = element.name;
+          option.text = element.name;
+          option.id = element.name;
+          option.classList.add(element.isoCode);
+
+          if (!existingOption) dataList.append(option);
+          break;
+
+        case "City":
+          existingOption = document.querySelector(`#${element.name}`);
+          option = document.createElement("option");
+          option.value = element.name;
+          option.text = element.name;
+          option.id = element.name;
+
+          if (!existingOption) dataList.append(option);
+          break;
+
+        case "Job":
+          existingOption = document.querySelector(
+            `#${element.normalized_job_title}`
+          );
+          option = document.createElement("option");
+          option.value = element.normalized_job_title;
+          option.text = element.normalized_job_title;
+          option.id = element.normalized_job_title;
+
+          if (!existingOption) dataList.append(option);
+          break;
+        case "ZipCode":
+          option = document.createElement("option");
+          option.value = element;
+          option.text = element;
+
+          dataList.append(option);
+      }
     });
+
+  if (dataList.childElementCount) container.append(dataList);
+  dataListInput.setAttribute("autocomplete", "off");
+
+  dataListInput.classList.remove("loading");
+}
+
+export const isSelected = () => {
+  const input = document.querySelector("#factor");
+  const name = input.name;
+
+  if (name == "Salary") return true;
+
+  if (input.getAttribute("list")) {
+    const datalist = document.querySelector(`#${input.getAttribute("list")}`);
+    const value = input.value;
+    const option = $(datalist).find(`option[value="${value}"]`);
+    if (option != null && option.length > 0) return true;
   }
 
-  statesList.forEach((state) => {
-    let option = document.createElement("option");
-    option.value = state.name;
-    dataList.append(option);
-  });
-
-  container.append(dataList);
+  return false;
 };
