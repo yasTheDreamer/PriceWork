@@ -3,49 +3,13 @@ import FormFragement from "../../molecules/formFragement/FormFragement";
 import "./Style.css";
 import { Steps, Step } from "react-step-builder";
 import { summaryContext } from "../../../contexts/SummaryContext";
+import { factorsContext } from "../../../contexts/FactorsContext";
 import { inputController } from "../../../js/FormController";
 
 const Form = () => {
   const [Summary, setSummary] = useContext(summaryContext);
   const [Refresh, setRefresh] = useState(false);
-
-  const [factor, setFactor] = useState([
-    {
-      title: "Salary",
-      value: "",
-      for: "Salary",
-      type: "number",
-      list: "",
-    },
-    {
-      title: "Job",
-      value: "",
-      for: "Job",
-      type: "text",
-      list: "jobList",
-    },
-    {
-      title: "State",
-      value: "",
-      for: "State",
-      type: "text",
-      list: "stateList",
-    },
-    {
-      title: "City",
-      value: "",
-      for: "City",
-      type: "text",
-      list: "cityList",
-    },
-    {
-      title: "ZipCode",
-      value: "",
-      for: "ZipCode",
-      type: "number",
-      list: "zipcodeList",
-    },
-  ]);
+  const [Factors, setFactors] = useContext(factorsContext);
 
   const [stats, setStats] = useState([
     {
@@ -100,7 +64,7 @@ const Form = () => {
       <div className="main__form">
         {/* <FactorPlusIcon /> */}
         <Steps>
-          {factor.map((f) => {
+          {Factors.map((f) => {
             return (
               <Step
                 title={f.title}
