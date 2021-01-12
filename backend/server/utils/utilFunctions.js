@@ -120,7 +120,6 @@ const satisfiesFactors = (d, factors) => {
       b = true;
       return true;
     } else {
-      b = false;
       return false;
     }
   });
