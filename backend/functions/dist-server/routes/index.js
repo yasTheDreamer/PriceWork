@@ -11,7 +11,8 @@ var router = _express["default"].Router();
 /* GET home page. */
 router.get("/findAll", function (req, res, next) {
   var userService = new _UserServiceImpl["default"]();
-  userService.getAllData(res);
+  var factors = req.query.factors;
+  userService.getAllData(res, factors);
 });
 
 router.post("/save", function (req, res, next) {

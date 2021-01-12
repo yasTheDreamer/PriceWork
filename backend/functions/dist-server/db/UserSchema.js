@@ -22,11 +22,11 @@ var writeUserData = function writeUserData(user) {
   return userId;
 };exports.writeUserData = writeUserData;
 
-var readData = function readData(res) {
+var readData = function readData(res, factors) {
   usersRef.once(
   "value",
   function (snapshot) {
-    res.status(200).json({ summary: (0, _utilFunctions.filterData)(snapshot.val()) });
+    res.status(200).json({ summary: (0, _utilFunctions.filterData)(snapshot.val(), factors) });
   },
   function (err) {
     throw new Error(err);

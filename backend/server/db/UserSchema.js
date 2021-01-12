@@ -22,11 +22,11 @@ export const writeUserData = (user) => {
   return userId;
 };
 
-export const readData = (res) => {
+export const readData = (res, factors) => {
   usersRef.once(
     "value",
     (snapshot) => {
-      res.status(200).json({ summary: filterData(snapshot.val()) });
+      res.status(200).json({ summary: filterData(snapshot.val(), factors) });
     },
     (err) => {
       throw new Error(err);

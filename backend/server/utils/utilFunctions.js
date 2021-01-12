@@ -1,58 +1,38 @@
 import User from "../models/User";
 
-export const filterData = (data) => {
+export const filterData = (data, factors) => {
   let filteredData = {};
+  let parsedFactors = JSON.parse(factors);
+  let result = [];
 
-  filteredData.min = getMin(data);
-  filteredData.max = getMax(data);
-  filteredData.averageSalary = averageSalary(data);
-  filteredData.total = Object.values(data).length;
-  console.log(filteredData);
+  if (isOnlySalary(parsedFactors)) {
+    result = Object.values(data);
+  } else {
+    result = filterResults(data, parsedFactors);
+  }
+
+  let salaries = [];
+
+  result.forEach((r) => {
+    if (r.salary) salaries.push(r.salary);
+  });
+
+  filteredData.min = getMin(salaries);
+  filteredData.max = getMax(salaries);
+  filteredData.averageSalary = averageSalary(salaries);
+
+  filteredData.total = numberOfResults(result, data, parsedFactors);
 
   return filteredData;
 };
 
-export const getMin = (data) => {
-  let records = Object.values(data);
-  let salaries = [];
-  let min;
-
-  records.forEach((record) => {
-    if (record.salary) {
-      salaries.push(record.salary);
-    }
-  });
-
-  if (salaries[0]) min = salaries[0];
-
-  salaries.forEach((salary) => {
-    if (salary < min) {
-      min = salary;
-    }
-  });
-
+export const getMin = (salaries) => {
+  let min = Math.min(...salaries);
   return min;
 };
 
-export const getMax = (data) => {
-  let records = Object.values(data);
-  let salaries = [];
-  let max;
-
-  records.forEach((record) => {
-    if (record.salary) {
-      salaries.push(record.salary);
-    }
-  });
-
-  if (salaries[0]) max = salaries[0];
-
-  salaries.forEach((salary) => {
-    if (salary > max) {
-      max = salary;
-    }
-  });
-
+export const getMax = (salaries) => {
+  let max = Math.max(...salaries);
   return max;
 };
 
@@ -60,20 +40,10 @@ const getSum = (total, num) => {
   return total + Math.round(num);
 };
 
-export const averageSalary = (data) => {
-  let array = Object.values(data);
-  let salaries = [];
+export const averageSalary = (salaries) => {
+  let sum;
 
-  array.forEach((arr) => {
-    if (arr.salary) salaries.push(arr.salary);
-  });
-
-  console.log(array);
-
-  let sum = salaries.reduce(getSum, 0);
-
-  console.log("sum : ", sum);
-  console.log("length : ", salaries.length);
+  sum = salaries.reduce(getSum, 0);
 
   return sum / salaries.length;
 };
@@ -115,8 +85,89 @@ export const updateSessionToken = (key, req, res) => {
 
 export const setListing = (snapshot) => {
   let currentSnapshot;
-
   currentSnapshot = snapshot.val();
 
   return currentSnapshot;
 };
+
+/***
+ * this function checks that for every
+ *
+ */
+
+const satisfiesFactors = (d, factors) => {
+  let b = false;
+
+  Object.keys(factors).every((f) => {
+    if (f == "salary" || f == "timeStamp") {
+      return true;
+    } else if (f == "address") {
+      return Object.keys(factors[f]).every((element) => {
+        if (factors[f][element] && d[f] && d[f][element]) {
+          if (factors[f][element] == d[f][element]) {
+            b = true;
+            return true;
+          } else {
+            b = false;
+            return false;
+          }
+        } else if (factors[f][element]) {
+          b = false;
+          return true;
+        }
+      });
+    } else if (d[f] && d[f] == factors[f]) {
+      b = true;
+      return true;
+    } else {
+      b = false;
+      return false;
+    }
+  });
+
+  return b;
+};
+
+const numberOfResults = (result, data, factors) => {
+  let b = false;
+
+  /**
+   * if salary is the only factor entered by the user
+   * then retrun the total of documents in the database
+   */
+
+  if (isOnlySalary(factors)) {
+    return Object.values(data).length;
+  }
+
+  return result.length;
+};
+
+function isOnlySalary(factors) {
+  let b = false;
+  Object.keys(factors).every((f) => {
+    if (f != "timeStamp") {
+      if (f == "salary") {
+        b = true;
+        return true;
+      } else if (f != "address" && factors[f]) {
+        b = false;
+        return false;
+      } else if (f == "address") {
+        Object.keys(factors[f]).every((element) => {
+          if (factors[f][element]) {
+            b = false;
+            return false;
+          }
+        });
+      }
+    }
+  });
+  return b;
+}
+
+function filterResults(data, factors) {
+  let result = [];
+  result = Object.values(data).filter((d) => satisfiesFactors(d, factors));
+  return result;
+}

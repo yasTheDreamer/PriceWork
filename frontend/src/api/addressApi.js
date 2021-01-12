@@ -20,7 +20,7 @@ export const getZipCodes = (state, city) => {
 
   if (state && city) url = `${GET_ZIPCODES}/${city}/${state}`;
 
-  if (url) return fetchData(url, null, null, null, null, null, "omit");
+  if (url) return fetchData(url, null, null, null, null, null, null, "omit");
 };
 
 export const getJobs = (prefix) => {
@@ -28,6 +28,6 @@ export const getJobs = (prefix) => {
   if (GET_JOBS && prefix) {
     url = `${GET_JOBS}=${encodeURIComponent(prefix)}`;
 
-    if (url) return fetchData(url, null, null, null, null, null, "omit");
+    if (url) return fetchData(url, null, null, null, null, null, null, "omit");
   }
 };

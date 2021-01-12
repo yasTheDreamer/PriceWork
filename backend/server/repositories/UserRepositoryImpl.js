@@ -17,8 +17,8 @@ class UserRepositoryImpl extends UserRepository {
     return userToUpdate.key;
   }
 
-  findAll(res) {
-    readData(res);
+  findAll(res, factors) {
+    readData(res, factors);
   }
 
   exists(key) {

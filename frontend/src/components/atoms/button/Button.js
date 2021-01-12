@@ -6,7 +6,6 @@ import {
   SAVE_DATA,
   DEV_READ_DATA,
   DEV_SAVE_DATA,
-  RAPID_API_KEY,
 } from "../../../utils/env";
 import { isSelected } from "../../../utils/utilFunctions";
 import User from "../../../models/User";
@@ -14,12 +13,17 @@ import User from "../../../models/User";
 import { summaryContext } from "../../../contexts/SummaryContext";
 import { recordContext } from "../../../contexts/RecordContext";
 import { addressContext } from "../../../contexts/AddressContext";
-import { formController } from "../../../js/FormController";
+import {
+  formController,
+  formControlWithoutBuild,
+} from "../../../js/FormController";
+import { factorBuilderContext } from "../../../contexts/CurrentFactorContext";
 
 const Button = (props) => {
   const [Summary, setSummary] = useContext(summaryContext);
   const [Record, setRecord] = useContext(recordContext);
   const [Address, setAddress] = useContext(addressContext);
+  const [factorBuilder, setfactorBuilder] = useContext(factorBuilderContext);
 
   const [user] = useState(new User());
   const [opera, setOpera] = useState();
@@ -27,7 +31,7 @@ const Button = (props) => {
   const operation = () => {
     switch (opera) {
       case "read":
-        fetchDB(DEV_READ_DATA).then((res) => {
+        fetchDB(DEV_READ_DATA, factorBuilder.build()).then((res) => {
           let summary = res.summary;
           setSummary({
             min: `${summary.min}`,
@@ -38,8 +42,8 @@ const Button = (props) => {
         });
         break;
       case "write":
-        fetchDB(DEV_SAVE_DATA, Record).then(() => {
-          fetchDB(DEV_READ_DATA).then((res) => {
+        fetchDB(DEV_SAVE_DATA, null, Record).then(() => {
+          fetchDB(DEV_READ_DATA, factorBuilder.build()).then((res) => {
             let summary = res.summary;
             setSummary({
               min: `${summary.min}`,
@@ -78,6 +82,10 @@ const Button = (props) => {
     }
   };
 
+  const buildFacotorQuery = () => {
+    setfactorBuilder(formControlWithoutBuild(factorBuilder));
+  };
+
   const setUser = () => {
     setRecord(formController(user));
   };
@@ -95,10 +103,6 @@ const Button = (props) => {
     }
   }, [opera]);
 
-  useEffect(() => {
-    console.log(Summary);
-  }, [Summary]);
-
   return (
     <>
       <input
@@ -108,8 +112,9 @@ const Button = (props) => {
         onClick={async () => {
           if (isSelected()) {
             setUser();
-            await setOpera(props.operation);
             setAddressValues();
+            buildFacotorQuery();
+            await setOpera(props.operation);
             op();
           } else if (props.value == "back") {
             op();

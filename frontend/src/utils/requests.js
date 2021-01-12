@@ -5,6 +5,7 @@ export const fetchData = (
   offset = null,
   limit = null,
   prefix = null,
+  factors = null,
   credentials = "include"
 ) => {
   if (url) {
@@ -18,6 +19,8 @@ export const fetchData = (
       };
 
     if (prefix) url = url + `?namePrefix=${encodeURIComponent(prefix)}`;
+    if (factors)
+      url = url + `?factors=${encodeURIComponent(JSON.stringify(factors))}`;
     if (body == null) {
       return fetch(url, {
         method: "GET",

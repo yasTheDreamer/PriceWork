@@ -17,8 +17,8 @@ UserRepositoryImpl = /*#__PURE__*/function (_UserRepository) {_inherits(UserRepo
       return userToUpdate.key;
     } }, { key: "findAll", value: function findAll(
 
-    res) {
-      (0, _UserSchema.readData)(res);
+    res, factors) {
+      (0, _UserSchema.readData)(res, factors);
     } }, { key: "exists", value: function exists(
 
     key) {

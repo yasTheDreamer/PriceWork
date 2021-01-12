@@ -6,15 +6,18 @@ import App from "./App";
 import { SummaryProvider } from "./contexts/SummaryContext";
 import { RecordProvider } from "./contexts/RecordContext";
 import { AddressProvider } from "./contexts/AddressContext";
+import { FactorBuilderProvider } from "./contexts/CurrentFactorContext";
 
 ReactDOM.render(
   <React.StrictMode>
     <RecordProvider>
       <SummaryProvider>
         <AddressProvider>
-          <Router>
-            <App />
-          </Router>
+          <FactorBuilderProvider>
+            <Router>
+              <App />
+            </Router>
+          </FactorBuilderProvider>
         </AddressProvider>
       </SummaryProvider>
     </RecordProvider>

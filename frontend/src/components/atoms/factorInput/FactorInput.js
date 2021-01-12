@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext } from "react";
 import "./Style.css";
 import { populateList } from "../../../utils/utilFunctions";
 import { addressContext } from "../../../contexts/AddressContext";

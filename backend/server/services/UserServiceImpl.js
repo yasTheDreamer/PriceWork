@@ -18,10 +18,10 @@ class UserServiceImpl extends UserService {
     }
   }
 
-  getAllData(res) {
+  getAllData(res, factors) {
     try {
       const UserRepository = new UserRepositoryImpl();
-      UserRepository.findAll(res);
+      UserRepository.findAll(res, factors);
     } catch (err) {
       console.log("cannot fetch data from the database" + err);
     }

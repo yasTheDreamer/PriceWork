@@ -11,7 +11,8 @@ var router = express.Router();
 /* GET home page. */
 router.get("/findAll", (req, res, next) => {
   const userService = new UserServiceImpl();
-  userService.getAllData(res);
+  const factors = req.query.factors;
+  userService.getAllData(res, factors);
 });
 
 router.post("/save", (req, res, next) => {

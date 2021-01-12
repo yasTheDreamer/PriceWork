@@ -1,58 +1,38 @@
-"use strict";Object.defineProperty(exports, "__esModule", { value: true });exports.setListing = exports.updateSessionToken = exports.constructUser = exports.averageSalary = exports.getMax = exports.getMin = exports.filterData = void 0;var _User = _interopRequireDefault(require("../models/User"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { "default": obj };}
+"use strict";Object.defineProperty(exports, "__esModule", { value: true });exports.setListing = exports.updateSessionToken = exports.constructUser = exports.averageSalary = exports.getMax = exports.getMin = exports.filterData = void 0;var _User = _interopRequireDefault(require("../models/User"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { "default": obj };}function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _iterableToArray(iter) {if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) return _arrayLikeToArray(arr);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}
 
-var filterData = function filterData(data) {
+var filterData = function filterData(data, factors) {
   var filteredData = {};
+  var parsedFactors = JSON.parse(factors);
+  var result = [];
 
-  filteredData.min = getMin(data);
-  filteredData.max = getMax(data);
-  filteredData.averageSalary = averageSalary(data);
-  filteredData.total = Object.values(data).length;
-  console.log(filteredData);
+  if (isOnlySalary(parsedFactors)) {
+    result = Object.values(data);
+  } else {
+    result = filterResults(data, parsedFactors);
+  }
+
+  var salaries = [];
+
+  result.forEach(function (r) {
+    if (r.salary) salaries.push(r.salary);
+  });
+
+  filteredData.min = getMin(salaries);
+  filteredData.max = getMax(salaries);
+  filteredData.averageSalary = averageSalary(salaries);
+
+  filteredData.total = numberOfResults(result, data, parsedFactors);
 
   return filteredData;
 };exports.filterData = filterData;
 
-var getMin = function getMin(data) {
-  var records = Object.values(data);
-  var salaries = [];
-  var min;
-
-  records.forEach(function (record) {
-    if (record.salary) {
-      salaries.push(record.salary);
-    }
-  });
-
-  if (salaries[0]) min = salaries[0];
-
-  salaries.forEach(function (salary) {
-    if (salary < min) {
-      min = salary;
-    }
-  });
-
+var getMin = function getMin(salaries) {
+  var min = Math.min.apply(Math, _toConsumableArray(salaries));
   return min;
 };exports.getMin = getMin;
 
-var getMax = function getMax(data) {
-  var records = Object.values(data);
-  var salaries = [];
-  var max;
-
-  records.forEach(function (record) {
-    if (record.salary) {
-      salaries.push(record.salary);
-    }
-  });
-
-  if (salaries[0]) max = salaries[0];
-
-  salaries.forEach(function (salary) {
-    if (salary > max) {
-      max = salary;
-    }
-  });
-
+var getMax = function getMax(salaries) {
+  var max = Math.max.apply(Math, _toConsumableArray(salaries));
   return max;
 };exports.getMax = getMax;
 
@@ -60,20 +40,10 @@ var getSum = function getSum(total, num) {
   return total + Math.round(num);
 };
 
-var averageSalary = function averageSalary(data) {
-  var array = Object.values(data);
-  var salaries = [];
+var averageSalary = function averageSalary(salaries) {
+  var sum;
 
-  array.forEach(function (arr) {
-    if (arr.salary) salaries.push(arr.salary);
-  });
-
-  console.log(array);
-
-  var sum = salaries.reduce(getSum, 0);
-
-  console.log("sum : ", sum);
-  console.log("length : ", salaries.length);
+  sum = salaries.reduce(getSum, 0);
 
   return sum / salaries.length;
 };exports.averageSalary = averageSalary;
@@ -115,9 +85,90 @@ var updateSessionToken = function updateSessionToken(key, req, res) {
 
 var setListing = function setListing(snapshot) {
   var currentSnapshot;
-
   currentSnapshot = snapshot.val();
 
   return currentSnapshot;
-};exports.setListing = setListing;
+};
+
+/***
+ * this function checks that for every
+ *
+ */exports.setListing = setListing;
+
+var satisfiesFactors = function satisfiesFactors(d, factors) {
+  var b = false;
+
+  Object.keys(factors).every(function (f) {
+    if (f == "salary" || f == "timeStamp") {
+      return true;
+    } else if (f == "address") {
+      return Object.keys(factors[f]).every(function (element) {
+        if (factors[f][element] && d[f] && d[f][element]) {
+          if (factors[f][element] == d[f][element]) {
+            b = true;
+            return true;
+          } else {
+            b = false;
+            return false;
+          }
+        } else if (factors[f][element]) {
+          b = false;
+          return true;
+        }
+      });
+    } else if (d[f] && d[f] == factors[f]) {
+      b = true;
+      return true;
+    } else {
+      b = false;
+      return false;
+    }
+  });
+
+  return b;
+};
+
+var numberOfResults = function numberOfResults(result, data, factors) {
+  var b = false;
+
+  /**
+   * if salary is the only factor entered by the user
+   * then retrun the total of documents in the database
+   */
+
+  if (isOnlySalary(factors)) {
+    return Object.values(data).length;
+  }
+
+  return result.length;
+};
+
+function isOnlySalary(factors) {
+  var b = false;
+  Object.keys(factors).every(function (f) {
+    if (f != "timeStamp") {
+      if (f == "salary") {
+        b = true;
+        return true;
+      } else if (f != "address" && factors[f]) {
+        b = false;
+        return false;
+      } else if (f == "address") {
+        Object.keys(factors[f]).every(function (element) {
+          if (factors[f][element]) {
+            b = false;
+            return false;
+          }
+        });
+      }
+    }
+  });
+  return b;
+}
+
+function filterResults(data, factors) {
+  var result = [];
+  result = Object.values(data).filter(function (d) {return satisfiesFactors(d, factors);});
+  return result;
+}
 //# sourceMappingURL=utilFunctions.js.map

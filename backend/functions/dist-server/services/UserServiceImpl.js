@@ -18,10 +18,10 @@ UserServiceImpl = /*#__PURE__*/function (_UserService) {_inherits(UserServiceImp
       }
     } }, { key: "getAllData", value: function getAllData(
 
-    res) {
+    res, factors) {
       try {
         var UserRepository = new _UserRepositoryImpl["default"]();
-        UserRepository.findAll(res);
+        UserRepository.findAll(res, factors);
       } catch (err) {
         console.log("cannot fetch data from the database" + err);
       }
