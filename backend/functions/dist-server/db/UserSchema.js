@@ -1,7 +1,7 @@
-"use strict";Object.defineProperty(exports, "__esModule", { value: true });exports.updateRecord = exports.getRecordFromDB = exports.recordExists = exports.readData = exports.writeUserData = void 0;var _dbConnection = _interopRequireDefault(require("./dbConnection"));
+"use strict";Object.defineProperty(exports, "__esModule", { value: true });exports.updateRecord = exports.getRecordFromDB = exports.recordExists = exports.readData = exports.writeUserData = exports.usersRef = void 0;var _dbConnection = _interopRequireDefault(require("./dbConnection"));
 var _utilFunctions = require("../utils/utilFunctions");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { "default": obj };}
 
-var usersRef = _dbConnection["default"].database().ref("users");
+var usersRef = _dbConnection["default"].database().ref("users");exports.usersRef = usersRef;
 
 var writeUserData = function writeUserData(user) {
   var userId = usersRef.push({

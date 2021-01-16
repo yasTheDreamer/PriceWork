@@ -1,13 +1,18 @@
 import env from "dotenv";
 
-const dotenv = env.config();
+/**
+ * loading env in dev mode
+ */
+
+const dotenv = env.config({ path: `${__dirname}\\..\\..\\..\\.env` });
 
 export var firebaseConfig = {
-  apiKey: "AIzaSyCTrviNkH2i4YeEpo6co7K126O9HElMz9I",
-  authDomain: "priceworkapp.firebaseapp.com",
-  databaseURL: "https://priceworkapp-default-rtdb.firebaseio.com",
-  projectId: "priceworkapp",
-  storageBucket: "priceworkapp.appspot.com",
-  messagingSenderId: "308622328280",
-  appId: "1:308622328280:web:4a4373af877f6f5c3872ad",
+  apiKey: process.env.API_KEY,
+  authDomain: process.env.AUTH_DOMAIN,
+  databaseURL: process.env.DB_URL,
+  projectId: process.env.PROJECT_ID,
+  storageBucket: process.env.STORAGE_BUCKET,
+  messagingSenderId: process.env.MESSAGING_SENDER_ID,
+  appId: process.env.APP_ID,
+  serviceAccountId: process.env.SERVICE_ACCOUNT_ID,
 };

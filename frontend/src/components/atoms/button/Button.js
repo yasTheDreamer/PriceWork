@@ -18,12 +18,14 @@ import {
   formControlWithoutBuild,
 } from "../../../js/FormController";
 import { factorBuilderContext } from "../../../contexts/CurrentFactorContext";
+import { signInContext } from "../../../contexts/SignInContext";
 
 const Button = (props) => {
   const [Summary, setSummary] = useContext(summaryContext);
   const [Record, setRecord] = useContext(recordContext);
   const [Address, setAddress] = useContext(addressContext);
   const [factorBuilder, setfactorBuilder] = useContext(factorBuilderContext);
+  const [SignIn, setSignIn] = useContext(signInContext);
 
   const [user] = useState(new User());
   const [opera, setOpera] = useState();
@@ -110,16 +112,22 @@ const Button = (props) => {
         value={props.value}
         id="factor__button"
         onClick={async () => {
-          if (isSelected()) {
+          if (SignIn && isSelected()) {
             setUser();
             setAddressValues();
             buildFacotorQuery();
             await setOpera(props.operation);
             op();
-          } else if (props.value == "back") {
+          } else if (SignIn && props.value == "back") {
             op();
+          } else if (!SignIn) {
+            console.log(SignIn);
+            const error = document.querySelector("#error");
+            error.innerHTML = "An error occured trying to sign you in";
+            error.removeAttribute("hidden");
           } else {
             const error = document.querySelector("#error");
+            error.innerHTML = "you should pick an option from the list";
             error.removeAttribute("hidden");
           }
         }}

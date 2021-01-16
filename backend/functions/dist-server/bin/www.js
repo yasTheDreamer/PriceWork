@@ -29,6 +29,7 @@ var server = _http["default"].createServer(_app["default"]);
  */
 
 server.listen(port);
+
 server.on("error", onError);
 server.on("listening", onListening);
 

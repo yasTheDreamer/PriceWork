@@ -1,7 +1,7 @@
 import admin from "./dbConnection";
 import { filterData } from "../utils/utilFunctions";
 
-const usersRef = admin.database().ref("users");
+export const usersRef = admin.database().ref("users");
 
 export const writeUserData = (user) => {
   const userId = usersRef.push({

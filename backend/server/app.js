@@ -22,7 +22,7 @@ let sess = {
   cookie: { sameSite: "none", secure: false, httpOnly: false, maxAge: 900000 },
 };
 
-app.use(cors({ origin: true, credentials: true }));
+app.use(cors({ origin: process.env.DEV_ORIGIN_DOMAIN, credentials: true }));
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

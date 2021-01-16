@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import "./index.css";
@@ -8,6 +8,7 @@ import { RecordProvider } from "./contexts/RecordContext";
 import { AddressProvider } from "./contexts/AddressContext";
 import { FactorBuilderProvider } from "./contexts/CurrentFactorContext";
 import { FactorsProvider } from "./contexts/FactorsContext";
+import { SignInProvider } from "./contexts/SignInContext";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -16,9 +17,11 @@ ReactDOM.render(
         <AddressProvider>
           <FactorBuilderProvider>
             <FactorsProvider>
-              <Router>
-                <App />
-              </Router>
+              <SignInProvider>
+                <Router>
+                  <App />
+                </Router>
+              </SignInProvider>
             </FactorsProvider>
           </FactorBuilderProvider>
         </AddressProvider>

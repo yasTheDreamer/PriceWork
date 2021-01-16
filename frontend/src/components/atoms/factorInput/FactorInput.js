@@ -36,9 +36,7 @@ const FactorInput = (props) => {
           populateLists();
         }}
       />
-      <label id="error" hidden>
-        you should pick an option from the list
-      </label>
+      <label id="error" hidden></label>
     </div>
   );
 };

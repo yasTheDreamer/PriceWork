@@ -1,8 +1,17 @@
-import React, { useState, useCallback, useContext } from "react";
+import React, { useState, useCallback } from "react";
 import User from "../models/User";
 import { getCities, getJobs, getStates, getZipCodes } from "../api/addressApi";
-import { RAPID_API_KEY } from "./env";
+import { getToken } from "../api/userApi";
+import { v4 as uuidv4 } from "uuid";
+import { RAPID_API_KEY, DEV_ROOT } from "./env";
 import $ from "jquery";
+import firebase from "firebase/app";
+import "firebase/auth";
+import { firebaseConfig } from "../config/Config";
+
+firebase.initializeApp(firebaseConfig);
+
+let auth = firebase.auth;
 
 export const constructUser = (req) => {
   let user = new User();
@@ -159,4 +168,28 @@ export const isSelected = () => {
   }
 
   return false;
+};
+
+const getCustomToken = () => {
+  let generatedUUID = uuidv4();
+  let uuid = window.localStorage.getItem("uuid");
+
+  if (uuid) {
+    return getToken(DEV_ROOT, uuid);
+  } else {
+    window.localStorage.setItem("uuid", generatedUUID);
+    uuid = window.localStorage.getItem("uuid");
+    return getToken(DEV_ROOT, uuid);
+  }
+};
+
+export const signIn = () => {
+  return getCustomToken().then((customToken) => {
+    return auth().signInWithCustomToken(customToken.token);
+  });
+};
+
+export const windowController = (e) => {
+  e.preventDefault();
+  auth().currentUser.delete();
 };

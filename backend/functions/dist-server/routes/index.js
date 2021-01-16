@@ -1,24 +1,51 @@
 "use strict";var _express = _interopRequireDefault(require("express"));
 
 var _UserServiceImpl = _interopRequireDefault(require("../services/UserServiceImpl"));
-var _utilFunctions = require("../utils/utilFunctions");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { "default": obj };} //testing the firebase database insert
+var _utilFunctions = require("../utils/utilFunctions");
 
 
 
+
+var _dbConnection = _interopRequireDefault(require("../db/dbConnection"));
+
+require("firebase/auth");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { "default": obj };} //testing the firebase database insert
 
 var router = _express["default"].Router();
 
 /* GET home page. */
+
+router.get("/", function (req, res, next) {
+  if (req.headers.origin == process.env.DEV_ORIGIN_DOMAIN) {
+    var uuid = req.query.uuid;
+
+    if (uuid) {
+      _dbConnection["default"].
+      auth().
+      createCustomToken("".concat(uuid)).
+      then(function (customToken) {
+        res.status(200).json({ token: customToken });
+      });
+    } else {
+      res.status(500).send("uuid is not defined");
+    }
+  } else {
+    res.status(401).send("unauthorised to access");
+  }
+});
+
 router.get("/findAll", function (req, res, next) {
   var userService = new _UserServiceImpl["default"]();
-  var factors = req.query.factors;
-  userService.getAllData(res, factors);
+  if (req.query.factors) {
+    var factors = req.query.factors;
+    userService.getAllData(res, factors);
+  } else {
+    res.status(400).send("factors are not defined");
+  }
 });
 
 router.post("/save", function (req, res, next) {
   var service = new _UserServiceImpl["default"]();
 
-  console.log(req.session);
   var user = (0, _utilFunctions.constructUser)(req);
 
   if (

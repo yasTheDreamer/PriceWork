@@ -6,19 +6,46 @@ import {
   updateSessionToken,
   setListing,
 } from "../utils/utilFunctions";
+import admin from "../db/dbConnection";
+
+import "firebase/auth";
+
 var router = express.Router();
 
 /* GET home page. */
+
+router.get("/", (req, res, next) => {
+  if (req.headers.origin == process.env.DEV_ORIGIN_DOMAIN) {
+    let uuid = req.query.uuid;
+
+    if (uuid) {
+      admin
+        .auth()
+        .createCustomToken(`${uuid}`)
+        .then((customToken) => {
+          res.status(200).json({ token: customToken });
+        });
+    } else {
+      res.status(500).send("uuid is not defined");
+    }
+  } else {
+    res.status(401).send("unauthorised to access");
+  }
+});
+
 router.get("/findAll", (req, res, next) => {
   const userService = new UserServiceImpl();
-  const factors = req.query.factors;
-  userService.getAllData(res, factors);
+  if (req.query.factors) {
+    const factors = req.query.factors;
+    userService.getAllData(res, factors);
+  } else {
+    res.status(400).send("factors are not defined");
+  }
 });
 
 router.post("/save", (req, res, next) => {
   let service = new UserServiceImpl();
 
-  console.log(req.session);
   let user = constructUser(req);
 
   if (

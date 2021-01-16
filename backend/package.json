@@ -10,7 +10,6 @@
     "localfirebase": "npm run transpile & firebase serve --only functions",
     "watch:localfirebase": "nodemon"
   },
-  
   "babel": {
     "presets": [
       "@babel/preset-env"
@@ -46,7 +45,8 @@
     "morgan": "~1.9.1",
     "node-babel": "^0.1.2",
     "nodemon": "^2.0.6",
-    "redis": "^3.0.2"
+    "redis": "^3.0.2",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@babel/node": "^7.12.10",
